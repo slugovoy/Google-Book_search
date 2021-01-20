@@ -1,46 +1,40 @@
 import React, { useRef } from "react";
 import { useStoreContext } from "../../utils/GlobalState";
-import { ADD_POST, LOADING } from "../../utils/actions";
+import { RENDER_RESULTS, LOADING } from "../../utils/actions";
 import API from "../../utils/API";
-
+const Base_URL = "https://www.googleapis.com/books/v1/volumes?q=";
 function CreatePostForm() {
   const searchRef = useRef();
- 
   const [state, dispatch] = useStoreContext();
-
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(searchRef.current.value)
-    // dispatch({ type: LOADING });
-    // API.savePost({
-    //   title: titleRef.current.value,
-    //   body: bodyRef.current.value,
-    //   author: authorRef.current.value
-    // })
-    //   .then(result => {
-    //     dispatch({
-    //       type: ADD_POST,
-    //       post: result.data
-    //     });
-    //   })
-    //   .catch(err => console.log(err));
-
-    // titleRef.current.value = "";
-    // bodyRef.current.value = "";
+    const query = Base_URL + searchRef.current.value;
+    fetch(query)
+      .then((data) => data.json())
+      .then((data) => {
+        dispatch({
+          type: RENDER_RESULTS,
+          payload: data,
+        });
+      })
+      .catch((err) => console.log(err));
+    searchRef.current.value = "";
   };
-
   return (
     <div>
       <h2>Search for a book</h2>
       <form className="form-group mt-5 mb-5" onSubmit={handleSubmit}>
-        <input className="form-control mb-5" required ref={searchRef} placeholder="Enter book name here..." />
-      
-        <button className="btn btn-success mt-3 mb-5"  type="submit">
+        <input
+          className="form-control mb-5"
+          required
+          ref={searchRef}
+          placeholder="Enter book name here..."
+        />
+        <button className="btn btn-success mt-3 mb-5" type="submit">
           Search
         </button>
       </form>
     </div>
   );
 }
-
 export default CreatePostForm;
