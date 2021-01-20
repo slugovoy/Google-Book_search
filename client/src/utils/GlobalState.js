@@ -1,14 +1,10 @@
 import React, { createContext, useReducer, useContext } from "react";
-import {
-  SET_CURRENT_POST,
-  REMOVE_POST,
-  UPDATE_POSTS,
-  ADD_POST,
-  ADD_FAVORITE,
-  UPDATE_FAVORITES,
-  REMOVE_FAVORITE,
+import { 
+  GET_BOOKS,
+  REMOVE_BOOK,
+  ADD_BOOK,
   LOADING
-} from "./actions";
+} from "./actions"
 
 const StoreContext = createContext();
 const { Provider } = StoreContext;
