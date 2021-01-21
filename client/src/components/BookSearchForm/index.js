@@ -4,7 +4,7 @@ import { RENDER_RESULTS, LOADING } from "../../utils/actions";
 import API from "../../utils/API";
 const Base_URL = "https://www.googleapis.com/books/v1/volumes?q=";
 function CreatePostForm() {
-  const searchRef = useRef();
+  
   const [state, dispatch] = useStoreContext();
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -12,10 +12,12 @@ function CreatePostForm() {
     fetch(query)
       .then((data) => data.json())
       .then((data) => {
-        dispatch({
-          type: RENDER_RESULTS,
-          payload: data,
-        });
+        if (data.length > 0) {
+          dispatch({
+            type: RENDER_RESULTS,
+            payload: data,
+          });
+        }
       })
       .catch((err) => console.log(err));
     searchRef.current.value = "";
@@ -27,7 +29,6 @@ function CreatePostForm() {
         <input
           className="form-control mb-5"
           required
-          ref={searchRef}
           placeholder="Enter book name here..."
         />
         <button className="btn btn-success mt-3 mb-5" type="submit">
