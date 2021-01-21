@@ -10,10 +10,10 @@ const Home = () => {
         <Col size="md">
           <CreatePostForm />
         </Col>
-        <Col size="md-6 sm-12">
+      </Row>
+        <Col size="md-12">
           <PostsList />
         </Col>
-      </Row>
     </Container>
   );
 };

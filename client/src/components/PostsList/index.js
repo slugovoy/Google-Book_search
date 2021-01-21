@@ -1,76 +1,68 @@
-import React, { useEffect } from "react";
-import { ListItem, List } from "../List";
-import DeleteBtn from "../DeleteBtn";
+import React from "react";
 import { Link } from "react-router-dom";
 import { useStoreContext } from "../../utils/GlobalState";
-import { REMOVE_POST, UPDATE_POSTS, LOADING } from "../../utils/actions";
+
 import API from "../../utils/API";
 import { Card, Button } from "react-bootstrap";
+
 function PostsList() {
-  const [state, dispatch] = useStoreContext();
-  console.log( "Hi")
-  const handleSave = (e) => {
-    console.log(e.target.data);
-    // API.saveBook({
-    //   title: titleRef.current.value,
-    //   authors: bodyRef.current.value,
-    //   description: authorRef.current.value,
-    //   image: imageRef.current.value,
-    //   link: linkRef.current.value,
-    // })
-    //   .then((result) => {
-    //     dispatch({
-    //       type: ADD_POST,
-    //       post: result.data,
-    //     });
-    //   })
-    //   .catch((err) => console.log(err));
-    // titleRef.current.value = "";
-    // bodyRef.current.value = "";
+  const [state,_] = useStoreContext();
+  console.log("Hi");
+  const handleSave = (value) => {
+    const bookInfo = value.volumeInfo;
+
+    API.saveBook({
+      title: bookInfo.title,
+      authors: bookInfo.authors[0],
+      description: bookInfo.description,
+      image: bookInfo.imageLinks.thumbnail,
+      link: bookInfo.infoLink,
+    }).catch((err) => console.log(err));
   };
-  // useEffect(() => {
-  //   getPosts();
-  // }, []);
+
   return (
     <div>
-      <h1>All Blog Posts</h1>
-      <h3 className="mb-5 mt-5">Click on a post to view</h3>
+      <h1>All Books</h1>
+      <h3 className="mb-5 mt-5">Click on a button  to view or save</h3>
       {state.searchResults.length ? (
         <>
           {state.searchResults.map((item) => (
-            <Card key={item.id} style={{ width: "18rem" }}>
-              <Card.Img
-                variant="top"
-                src={item.volumeInfo.imageLinks.thumbnail}
-              />
-              <Card.Body>
-                <Card.Title>
+            <div className="d-flex flex-wrap mb-5 border border-success">
+              <Card
+                key={item._id}
+                style={{ width: "17rem" }}
+                className="border-end-success"
+              >
+                <Card.Title className="mb-4 ml-2">
                   {item.volumeInfo.title} by {item.volumeInfo.authors}
                 </Card.Title>
-                <Card.Text>{item.volumeInfo.description}</Card.Text>
-                <Button
-                  href={item.volumeInfo.infoLink}
-                  target="_blank"
-                  variant="primary"
-                  style={{ marginRight: "10px" }}
-                >
-                  View
-                </Button>
-                <Button
-                  variant="primary"
-                  onClick={handleSave}
-                  data={[
-                    item.volumeInfo.imageLinks.thumbnail,
-                    item.volumeInfo.title,
-                    item.volumeInfo.authors,
-                    item.volumeInfo.description,
-                    item.volumeInfo.infoLink,
-                  ]}
-                >
-                  Save
-                </Button>
+                <Card.Img
+                  style={{ width: "10rem" }}
+                  variant="top"
+                  src={item.volumeInfo.imageLinks.thumbnail}
+                  className="ml-5 mb-2"
+                />
+              </Card>
+              <Card.Body style={{ width: "18rem" }}>
+                <div className="float-right">
+                  <Button
+                    href={item.volumeInfo.infoLink}
+                    target="_blank"
+                    variant="primary"
+                    style={{ marginRight: "10px" }}
+                  >
+                    View
+                  </Button>
+                  <Button variant="primary" onClick={() => handleSave(item)}>
+                    Save
+                  </Button>
+                  <br></br>
+                </div>
+                <Card.Text className="mt-5">
+                  {item.volumeInfo.description}
+                </Card.Text>
               </Card.Body>
-            </Card>
+            </div>
           ))}
         </>
       ) : (

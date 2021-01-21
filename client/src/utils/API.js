@@ -18,7 +18,7 @@ import axios from "axios";
 //   }
 // };
 export default {
-  getAllBooks: () => "/api/books",
+  getAllBooks: () => axios.get("/api/books"),
   saveBook: (data) => axios.post("/api/books", data),
   deleteBook: (id) => axios.delete("api/books/" + id),
 };
