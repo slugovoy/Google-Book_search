@@ -1,3 +1,4 @@
+// Packages and variables
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./pages/Home";
@@ -6,6 +7,7 @@ import Nav from "./components/Nav";
 import { StoreProvider } from "./utils/GlobalState";
 import SavedList from "./pages/SavedList";
 
+// Render component
 function App() {
   return (
     <Router>

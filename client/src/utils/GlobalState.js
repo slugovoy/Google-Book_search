@@ -1,6 +1,8 @@
+// Packages
 import React, { createContext, useReducer, useContext } from "react";
 import { RENDER_RESULTS, GET_FAVORITE, REMOVE_FAVORITE } from "./actions";
 
+// Variables
 const StoreContext = createContext();
 const { Provider } = StoreContext;
 

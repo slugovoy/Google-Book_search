@@ -1,8 +1,10 @@
+// Packages and variables
 import React from "react";
 import { Col, Row, Container } from "../components/Grid";
 import BookSearchForm from "../components/BookSearchForm";
 import BooksList from "../components/PostsList";
 
+// Home page
 const Home = () => {
   return (
     <Container fluid>

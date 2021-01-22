@@ -1,6 +1,7 @@
 import React from "react";
-
+// Jumbotron element
 function Jumbotron() {
+  // Render
   return (
     <div
       style={{ textAlign: "center" }}

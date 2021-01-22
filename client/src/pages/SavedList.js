@@ -1,14 +1,16 @@
+// Packages and variables
 import React, { useEffect } from "react";
-
 import { Link } from "react-router-dom";
 import { useStoreContext } from "../utils/GlobalState";
 import { REMOVE_FAVORITE, GET_FAVORITE } from "../utils/actions";
 import API from "../utils/API";
 import { Card, Button } from "react-bootstrap";
 
+// List of favorite books page
 const FavoritesList = () => {
   const [state, dispatch] = useStoreContext();
 
+  // Call to get all saved books in database
   const getFavorites = () => {
     API.getAllBooks({}).then(({ data }) =>
       dispatch({
@@ -18,6 +20,7 @@ const FavoritesList = () => {
     );
   };
 
+  // Handle delete book
   const removeFromFavorites = (id) => {
     API.deleteBook(id).then(({ data }) =>
       dispatch({
@@ -27,10 +30,12 @@ const FavoritesList = () => {
     );
   };
 
+  // Load all saved books when page renders
   useEffect(() => {
     getFavorites();
   }, [state.savedBooks]);
 
+  // Render component
   return (
     <div className="col-sm-12">
       <h1 className="text-center">Here's All of Your Favorite Books</h1>

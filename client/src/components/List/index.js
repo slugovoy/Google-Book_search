@@ -10,7 +10,7 @@ export function List({ children }) {
     </div>
   );
 }
-
+// List item
 export function ListItem({ children }) {
   return <li className="list-group-item">{children}</li>;
 }

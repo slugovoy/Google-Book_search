@@ -1,14 +1,15 @@
+// Packages and variables
 import React from "react";
-
 import { Link } from "react-router-dom";
 import { useStoreContext } from "../../utils/GlobalState";
-
 import API from "../../utils/API";
 import { Card, Button } from "react-bootstrap";
 
+// Book's list component
 function BooksList() {
   const [state] = useStoreContext();
 
+  // Handle save function
   const handleSave = (value) => {
     const book = value.volumeInfo;
     API.saveBook({
@@ -19,7 +20,7 @@ function BooksList() {
       link: book.infoLink,
     }).catch((err) => console.log(err));
   };
-
+// Render on page
   return (
     <div>
       <h1>All Blog Posts</h1>
