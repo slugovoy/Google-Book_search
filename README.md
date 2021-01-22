@@ -22,7 +22,7 @@ You don't need to install it, just simply go to this [Link](https://google-books
 
 * Gif:
 
-![Demo]()
+![Demo](./client/public/GoogleBooksGif.gif)
 
 
 * Description:
