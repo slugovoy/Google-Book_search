@@ -70,7 +70,7 @@ function BooksList() {
         <h3>You haven't added any posts yet!</h3>
       )}
       <div className="mt-5">
-        <Link to="favorites">View favorites</Link>
+        <Link to="/saved">View favorites</Link>
       </div>
     </div>
   );
