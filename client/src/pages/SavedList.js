@@ -1,13 +1,14 @@
 import React, { useEffect } from "react";
-import { ListItem, List } from "../components/List";
-import DeleteBtn from "../components/DeleteBtn";
+
 import { Link } from "react-router-dom";
 import { useStoreContext } from "../utils/GlobalState";
-import { REMOVE_FAVORITE, LOADING, GET_FAVORITE } from "../utils/actions";
+import { REMOVE_FAVORITE, GET_FAVORITE } from "../utils/actions";
 import API from "../utils/API";
 import { Card, Button } from "react-bootstrap";
+
 const FavoritesList = () => {
   const [state, dispatch] = useStoreContext();
+
   const getFavorites = () => {
     API.getAllBooks({}).then(({ data }) =>
       dispatch({
@@ -16,6 +17,7 @@ const FavoritesList = () => {
       })
     );
   };
+
   const removeFromFavorites = (id) => {
     API.deleteBook(id).then(({ data }) =>
       dispatch({
@@ -24,16 +26,21 @@ const FavoritesList = () => {
       })
     );
   };
+
   useEffect(() => {
     getFavorites();
   }, [state.savedBooks]);
+
   return (
     <div className="col-sm-12">
       <h1 className="text-center">Here's All of Your Favorite Books</h1>
       {state.savedBooks.length ? (
         <div>
           {state.savedBooks.map((item) => (
-            <div className="d-flex flex-wrap mb-5 border border-success">
+            <div
+              key={item._id + 2}
+              className="d-flex flex-wrap mb-5 border border-success"
+            >
               <Card
                 key={item._id}
                 style={{ width: "17rem" }}
@@ -49,7 +56,7 @@ const FavoritesList = () => {
                   className="ml-5 mb-2"
                 />
               </Card>
-              <Card.Body style={{ width: "18rem" }}>
+              <Card.Body key={item._id + 1} style={{ width: "18rem" }}>
                 <div className="float-right">
                   <Button
                     href={item.link}
@@ -76,7 +83,7 @@ const FavoritesList = () => {
         <h3>You haven't added any favorites yet!</h3>
       )}
       <div className="mt-5">
-        <Link to="home">Back to home</Link>
+        <Link to="/">Back to home</Link>
       </div>
     </div>
   );

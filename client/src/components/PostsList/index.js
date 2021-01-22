@@ -1,29 +1,29 @@
 import React from "react";
+
 import { Link } from "react-router-dom";
 import { useStoreContext } from "../../utils/GlobalState";
 
 import API from "../../utils/API";
 import { Card, Button } from "react-bootstrap";
 
-function PostsList() {
-  const [state,_] = useStoreContext();
-  console.log("Hi");
-  const handleSave = (value) => {
-    const bookInfo = value.volumeInfo;
+function BooksList() {
+  const [state] = useStoreContext();
 
+  const handleSave = (value) => {
+    const book = value.volumeInfo;
     API.saveBook({
-      title: bookInfo.title,
-      authors: bookInfo.authors[0],
-      description: bookInfo.description,
-      image: bookInfo.imageLinks.thumbnail,
-      link: bookInfo.infoLink,
+      title: book.title,
+      authors: book.authors[0],
+      description: book.description,
+      image: book.imageLinks.thumbnail,
+      link: book.infoLink,
     }).catch((err) => console.log(err));
   };
 
   return (
     <div>
-      <h1>All Books</h1>
-      <h3 className="mb-5 mt-5">Click on a button  to view or save</h3>
+      <h1>All Blog Posts</h1>
+      <h3 className="mb-5 mt-5">Click on a post to view</h3>
       {state.searchResults.length ? (
         <>
           {state.searchResults.map((item) => (
@@ -43,7 +43,7 @@ function PostsList() {
                   className="ml-5 mb-2"
                 />
               </Card>
-              <Card.Body style={{ width: "18rem" }}>
+              <Card.Body  key={item._id + 1}style={{ width: "18rem" }}>
                 <div className="float-right">
                   <Button
                     href={item.volumeInfo.infoLink}
@@ -74,4 +74,5 @@ function PostsList() {
     </div>
   );
 }
-export default PostsList;
+
+export default BooksList;
